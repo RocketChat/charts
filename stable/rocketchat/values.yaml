@@ -29,6 +29,7 @@ config:
 
 ## MongoDB URL if using an externally provisioned MongoDB
 mongodbURL: ~
+mongodbURLoplog: ~
 
 ##
 ## MongoDB chart configuration
@@ -71,7 +72,7 @@ mongodb:
   
     ## Name of the replica set
     ##
-    name: rs0
+    name: rs01
   
     ## Key used for replica set authentication
     ##

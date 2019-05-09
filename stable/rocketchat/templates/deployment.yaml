@@ -40,7 +40,7 @@ spec:
         {{ else if .Values.mongodbURL }}
           value: {{ .Values.mongodbURL }}
         {{ else }}
-          value: mongodb://{{ template "rocketchat.mongodb.fullname" . }}:27017/rocketchat?replSet=rs01
+          value: mongodb://{{ template "rocketchat.mongodb.fullname" . }}:27017/rocketchat?replSet={{ .Values.mongodb.replicaSet.name }}
         {{ end }}
         - name: MONGO_OPLOG_URL
         {{ if .Values.mongodb.mongodbUsername }}
@@ -48,10 +48,10 @@ spec:
             secretKeyRef:
               name: {{ template "rocketchat.fullname" . }}
               key: mongo-uri-oplog
-        {{ else if .Values.mongodbURL }}
-          value: {{ .Values.mongodbURL }}
+        {{ else if .Values.mongodbURLoplog }}
+          value: {{ .Values.mongodbURLoplog }}
         {{ else }}
-          value: mongodb://{{ template "rocketchat.mongodb.fullname" . }}:27017/local?replSet=rs01
+          value: mongodb://{{ template "rocketchat.mongodb.fullname" . }}:27017/local?replSet={{ .Values.mongodb.replicaSet.name}}
         {{ end }}
         {{ if .Values.host }}
         - name: ROOT_URL
