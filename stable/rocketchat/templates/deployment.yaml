@@ -40,7 +40,18 @@ spec:
         {{ else if .Values.mongodbURL }}
           value: {{ .Values.mongodbURL }}
         {{ else }}
-          value: mongodb://{{ template "rocketchat.mongodb.fullname" . }}:27017/rocketchat
+          value: mongodb://{{ template "rocketchat.mongodb.fullname" . }}:27017/rocketchat?replSet={{ .Values.mongodb.replicaSet.name }}
+        {{ end }}
+        - name: MONGO_OPLOG_URL
+        {{ if .Values.mongodb.mongodbUsername }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rocketchat.fullname" . }}
+              key: mongo-uri-oplog
+        {{ else if .Values.mongodbURLoplog }}
+          value: {{ .Values.mongodbURLoplog }}
+        {{ else }}
+          value: mongodb://{{ template "rocketchat.mongodb.fullname" . }}:27017/local?replSet={{ .Values.mongodb.replicaSet.name}}
         {{ end }}
         {{ if .Values.host }}
         - name: ROOT_URL
@@ -60,7 +71,7 @@ spec:
           containerPort: 3000
         livenessProbe:
           httpGet:
-            path: /
+            path: /api/info
             port: http
           initialDelaySeconds: 60
           timeoutSeconds: 5

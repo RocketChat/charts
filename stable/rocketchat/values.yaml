@@ -3,7 +3,7 @@
 ##
 image:
   repository: rocketchat/rocket.chat
-  tag: 0.73.2
+  tag: 1.0.3
   pullPolicy: IfNotPresent
 
 ## Host for the application
@@ -29,6 +29,7 @@ config:
 
 ## MongoDB URL if using an externally provisioned MongoDB
 mongodbURL: ~
+mongodbURLoplog: ~
 
 ##
 ## MongoDB chart configuration
@@ -64,6 +65,32 @@ mongodb:
     accessMode: ReadWriteOnce
     size: 8Gi
 
+  replicaSet:
+    ## Whether to create a MongoDB replica set for high availability or not
+    enabled: true
+    useHostnames: true
+  
+    ## Name of the replica set
+    ##
+    name: rs01
+  
+    ## Key used for replica set authentication
+    ##
+    # key: key
+  
+    ## Number of replicas per each node type
+    ##
+    replicas:
+      secondary: 0
+      arbiter: 0
+    ## Pod Disruption Budget
+    ## ref: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
+    pdb:
+      minAvailable:
+        primary: 1
+        secondary: 0
+        arbiter: 0
+  
 ## Enable persistence using Persistent Volume Claims
 ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
 ##
