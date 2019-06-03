@@ -148,7 +148,7 @@ spec:
 ```
 
 ```console
-$ mongorestore --host rocketchat-mongodb --username <mongodb.mongodbUsername> --password <mongodb.mongodbPassword> --db <mongodb.mongodbDatabase> --archive=/dump/rocketchat-db-bkup.gz --gzip
+$ mongorestore --drop --host rocketchat-mongodb --username <mongodb.mongodbUsername> --password <mongodb.mongodbPassword> --db <mongodb.mongodbDatabase> --archive=/dump/rocketchat-db-bkup.gz --gzip
 ```
 
 In the last command `host` is the name of the rocketchat mongodb service. You may want to delete the extra replicaset for rocketchat from before the upgrade.
