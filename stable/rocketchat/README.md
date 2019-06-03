@@ -118,6 +118,15 @@ Use the workaround below to upgrade from versions previous to 1.0.0. The followi
 $ kubectl delete deployment rocketchat-rocketchat --cascade=false
 ```
 
+```console
+$ helm upgrade \
+--set mongodb.mongodbRootPassword=<password previously configured> \
+--set mongodb.mongodbPassword=<password previously configured> \
+--set backupDatabase=true \
+--set <other values previously configured on installation> \ 
+stable/rocketchat
+```
+
 After upgrade, restore the rocketchat db using this pod with the backup volume mounted and run the following command from inside the pod:
 
 ```
@@ -142,5 +151,5 @@ spec:
 $ mongorestore --host rocketchat-mongodb --username <mongodb.mongodbUsername> --password <mongodb.mongodbPassword> --db <mongodb.mongodbDatabase> --archive=/dump/rocketchat-db-bkup.gz --gzip
 ```
 
-In the last command `host` is the name of the rocketchat mongodb service.
+In the last command `host` is the name of the rocketchat mongodb service. You may want to delete the extra replicaset for rocketchat from before the upgrade.
 

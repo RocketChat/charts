@@ -1,3 +1,4 @@
+{{- if .Values.backupDatabase }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -23,3 +24,4 @@ spec:
           claimName: rocketchat-mongodump
       restartPolicy: Never
   backoffLimit: 4
+{{- end }}
