@@ -11,6 +11,7 @@ image:
 # host:
 
 replicaCount: 1
+minAvailable: 1
 
 smtp:
   enabled: false
